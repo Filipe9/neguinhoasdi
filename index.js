@@ -13,6 +13,29 @@ app.use((req, res, next) => {
     next();
 });
 
+
+const os = require('os');
+
+function getLocalIPs() {
+  const interfaces = os.networkInterfaces();
+  const ips = [];
+
+  for (const name of Object.keys(interfaces)) {
+    for (const net of interfaces[name]) {
+      // Ignora IPv6 e endereços internos (loopback)
+      if (net.family === 'IPv4' && !net.internal) {
+        ips.push(net.address);
+      }
+    }
+  }
+
+  return ips;
+}
+
+const ips = getLocalIPs();
+console.log('IP(s) da máquina:', ips.join(', '));
+
+
 const connectToDatabase = require('./Database');
 
 const AddLogin = require('./routes/add-login'); 
