@@ -12,11 +12,10 @@ app.use((req, res, next) => {
     console.log(`IP do cliente: ${clientIp}`);
     next();
 });
-const express = require("express");
 const app = express();
 
-// ✅ Isso resolve o problema do X-Forwarded-For
-app.set('trust proxy', 1);
+// ⬇️ Aqui pode adicionar isso agora:
+app.set('trust proxy', 1); // ✅ resolve erro do rate-limit
 
 
 const os = require('os');
